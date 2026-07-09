@@ -1,0 +1,126 @@
+============================================================
+1) KIMENET-PONTOSSÁG (utolsó 20%-os split alapján)
+============================================================
+Tanult modell   - Poisson deviance: 0.9788, MAE: 0.8245
+Naiv baseline   - Poisson deviance: 1.5048, MAE: 0.9764
+(baseline = a csapat saját utolsó néhány meccsének gólátlaga, ellenfél/kontextus nélkül)
+
+Legfontosabb feature-ök (együttható méret szerint):
+team_attack              0.575678
+opp_defense              0.517737
+is_home                  0.220380
+opp_conceded_lastN      -0.101956
+team_goals_lastN        -0.091409
+opp_attack              -0.086973
+team_defense            -0.059793
+opp_goals_lastN         -0.026906
+team_conceded_lastN      0.013259
+days_since_last_match   -0.000150
+
+Intercept (alap gólszint): -0.9500
+
+Modell H/D/V találati arány:      57.5%
+Naiv baseline (mindig többségi):  40.6%
+
+Tévesztési mátrix (sor=valós, oszlop=jósolt):
+predicted    A  D    H
+actual                
+A          150  0   86
+D           51  0  120
+H           33  1  244
+
+============================================================
+1b) DIXON-COLES KORREKCIÓ (alacsony eredmények / döntetlenek)
+============================================================
+Illesztett rho (TRAIN adaton): -0.0210
+
+Teszt-pontosság korrekció nélkül: 57.5%
+Teszt-pontosság Dixon-Coles-szal: 57.5%
+
+Tévesztési mátrix Dixon-Coles korrekcióval (sor=valós, oszlop=jósolt):
+predicted    A  D    H
+actual                
+A          150  0   86
+D           51  0  120
+H           33  1  244
+
+============================================================
+1e) RÉGIÓ-SZINTŰ KALIBRÁCIÓ (H/D/A újraskálázás)
+============================================================
+Átlagos modell-valószínűség a TRAIN adaton (H/D/A):
+  H: 44.0%  D: 24.1%  A: 31.8%
+Tényleges arány a TRAIN adaton (H/D/A):
+  H: 44.8%  D: 25.7%  A: 29.5%
+Kalibrációs szorzók:
+  H: 1.017  D: 1.066  A: 0.927
+
+Teszt-pontosság Dixon-Coles-szal (kalibráció nélkül): 57.5%
+Teszt-pontosság régió-kalibrációval:                 55.8%
+
+Tévesztési mátrix régió-kalibrációval (sor=valós, oszlop=jósolt):
+predicted    A  D    H
+actual                
+A          137  1   98
+D           45  0  126
+H           32  1  245
+
+============================================================
+1c) DRAW-MARGIN TRÜKK (döntetlen-bónusz, összehasonlításként)
+============================================================
+Legjobb margin a TRAIN adaton: 0.08
+
+Hogyan változik a train-pontosság a margin függvényében (részlet):
+ margin  accuracy  predicted_draw_share
+   0.00  0.559942              0.000000
+   0.05  0.559576              0.009137
+   0.10  0.553363              0.088816
+   0.15  0.546053              0.233918
+   0.20  0.531067              0.372442
+   0.25  0.498173              0.495614
+   0.30  0.470395              0.596126
+
+Teszt-pontosság sima argmax-szal:      57.5%
+Teszt-pontosság draw_margin=0.08-vel: 56.4%
+
+Tévesztési mátrix draw_margin-nal (sor=valós, oszlop=jósolt):
+col_0     A   D    H
+actual              
+A       142  13   81
+D        49   4  118
+H        33   5  240
+
+============================================================
+1d) ALPHA HATÁSA A RHO-RA ÉS A PONTOSSÁGRA
+============================================================
+(a cél a pontosság, nem a rho mérete - lásd a docstringet)
+ alpha       rho  accuracy_no_correction  accuracy_with_dixon_coles
+  0.01 -0.021003                0.575182                   0.575182
+  0.10 -0.017391                0.575182                   0.575182
+  0.50 -0.008805                0.573723                   0.573723
+  1.00 -0.004334                0.572263                   0.572263
+  2.00 -0.000761                0.570803                   0.570803
+  5.00  0.002131                0.569343                   0.569343
+ 10.00  0.003267                0.567883                   0.567883
+
+============================================================
+2) WALK-FORWARD KERESZT-VALIDÁCIÓ
+============================================================
+ fold  train_matches  test_matches  poisson_deviance      mae       rho  outcome_accuracy  calibrated_outcome_accuracy  calib_mult_H  calib_mult_D  calib_mult_A  majority_baseline_accuracy
+    1            685           684          1.208102 0.949356  0.044384          0.561404                     0.513158      1.127840      0.965617      0.882431                    0.470760
+    2           1369           684          1.102941 0.927363  0.041851          0.559942                     0.504386      1.156081      0.976375      0.843388                    0.456140
+    3           2053           684          1.108783 0.928953  0.011589          0.546784                     0.467836      1.160583      0.991766      0.827234                    0.419591
+    4           2737           684          1.091950 0.901074 -0.004325          0.573099                     0.463450      1.143800      1.010287      0.833698                    0.406433
+
+Összesítés (átlag ± szórás a fold-ok között):
+  Poisson deviance:    1.1279 ± 0.0539
+  MAE:                 0.9267 ± 0.0198
+  Dixon-Coles rho:     0.0234 ± 0.0237
+  Outcome accuracy:    56.0% ± 1.1%
+  Kalibrált accuracy:  48.7% ± 2.5%
+  Majority baseline:   43.8% ± 3.0%
+
+Kalibrációs szorzók fold-onként (H/D/A):
+  fold 1: H=1.128  D=0.966  A=0.882
+  fold 2: H=1.156  D=0.976  A=0.843
+  fold 3: H=1.161  D=0.992  A=0.827
+  fold 4: H=1.144  D=1.010  A=0.834

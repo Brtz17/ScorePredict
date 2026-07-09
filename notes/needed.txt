@@ -1,0 +1,26 @@
+All leagues -> Matches in the league -> Teams in the league -> Players
+                                                                   Missing players' effect
+                                                               Current position on the leaderboard
+                                                               Matches played
+                                                                   Strength of defense
+                                                                   Strength of attacking
+                                                               Last 5 matches
+                                                                   Goals scored / match
+                                                                   Goals conceded / match
+                                                               Last match played
+                                                               Home or away
+                        
+
+
+fixtures
+    X: 'team_attack', 'team_defense', 'opp_attack', 'opp_defense',
+    'team_goals_lastN', 'team_conceded_lastN',
+    'opp_goals_lastN', 'opp_conceded_lastN',
+    'is_home', 'days_since_last_match'
+    y: goals_scored
+
+    ticked: team_attack, team_defense, opp_attack, opp_defense,
+        team_goals_last5, team_conceded_last5,
+        opp_goals_last5, opp_conceded_last5,
+        days_since_last_match
+        goals_scored

@@ -1,0 +1,25 @@
+Strength of defense
+    Goals conceded / match
+Strength of attacking
+    Goals scored / match
+
+Chemistry (trainer included)
+
+Last 5 matches' performance:
+    Goals scored / match
+    Goals conceded / match
+
+If best 3 player's missing:
+    How much minutes / goal
+    Position
+    Minutes played
+
+Home or away
+
+League position
+
+Days since last match
+
+Aggressivity (how much fouls comitted)
+
+//Referee's strictness (how much fouls, card given [red card = 2 yellow cards])
