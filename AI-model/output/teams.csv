@@ -179,3 +179,99 @@ league_id,league_name,season,team_id,name,code,founded,venue_name,venue_city
 135,Serie A,2024,867,Lecce,LEC,1908,Stadio Comunale Via del Mare,Lecce
 135,Serie A,2024,895,Como,COM,1907,Stadio Giuseppe Sinigaglia,Como
 135,Serie A,2024,1579,Monza,MON,1912,U-Power Stadium,Monza
+78,Bundesliga,2022,157,Bayern München,BAY,1900,Allianz Arena,München
+78,Bundesliga,2022,159,Hertha BSC,HER,1892,Olympiastadion Berlin,Berlin
+78,Bundesliga,2022,160,SC Freiburg,FRE,1904,Europa-Park Stadion,Freiburg im Breisgau
+78,Bundesliga,2022,161,VfL Wolfsburg,WOL,1945,Volkswagen Arena,Wolfsburg
+78,Bundesliga,2022,162,Werder Bremen,WER,1899,Weserstadion,Bremen
+78,Bundesliga,2022,163,Borussia Mönchengladbach,MOE,1900,BORUSSIA-PARK,Mönchengladbach
+78,Bundesliga,2022,164,FSV Mainz 05,MAI,1905,MEWA ARENA,Mainz
+78,Bundesliga,2022,165,Borussia Dortmund,DOR,1909,SIGNAL IDUNA PARK,Dortmund
+78,Bundesliga,2022,167,1899 Hoffenheim,HOF,1899,PreZero Arena,Sinsheim
+78,Bundesliga,2022,168,Bayer Leverkusen,BAY,1904,BayArena,Leverkusen
+78,Bundesliga,2022,169,Eintracht Frankfurt,EIN,1899,Deutsche Bank Park,Frankfurt am Main
+78,Bundesliga,2022,170,FC Augsburg,AUG,1907,WWK Arena,Augsburg
+78,Bundesliga,2022,172,VfB Stuttgart,STU,1893,MHPArena,Stuttgart
+78,Bundesliga,2022,173,RB Leipzig,LEI,2009,Red Bull Arena,Leipzig
+78,Bundesliga,2022,174,FC Schalke 04,SCH,1904,Arena AufSchalke,Gelsenkirchen
+78,Bundesliga,2022,175,Hamburger SV,HAM,1887,Volksparkstadion,Hamburg
+78,Bundesliga,2022,176,VfL Bochum,BOC,1848,Vonovia Ruhrstadion,Bochum
+78,Bundesliga,2022,182,Union Berlin,UNI,1966,Stadion An der Alten Försterei,Berlin
+78,Bundesliga,2022,192,1. FC Köln,KOL,1948,RheinEnergieSTADION,Köln
+78,Bundesliga,2023,157,Bayern München,BAY,1900,Allianz Arena,München
+78,Bundesliga,2023,158,Fortuna Düsseldorf,DUS,1895,Düsseldorf Arena,Düsseldorf
+78,Bundesliga,2023,160,SC Freiburg,FRE,1904,Europa-Park Stadion,Freiburg im Breisgau
+78,Bundesliga,2023,161,VfL Wolfsburg,WOL,1945,Volkswagen Arena,Wolfsburg
+78,Bundesliga,2023,162,Werder Bremen,WER,1899,Weserstadion,Bremen
+78,Bundesliga,2023,163,Borussia Mönchengladbach,MOE,1900,BORUSSIA-PARK,Mönchengladbach
+78,Bundesliga,2023,164,FSV Mainz 05,MAI,1905,MEWA ARENA,Mainz
+78,Bundesliga,2023,165,Borussia Dortmund,DOR,1909,SIGNAL IDUNA PARK,Dortmund
+78,Bundesliga,2023,167,1899 Hoffenheim,HOF,1899,PreZero Arena,Sinsheim
+78,Bundesliga,2023,168,Bayer Leverkusen,BAY,1904,BayArena,Leverkusen
+78,Bundesliga,2023,169,Eintracht Frankfurt,EIN,1899,Deutsche Bank Park,Frankfurt am Main
+78,Bundesliga,2023,170,FC Augsburg,AUG,1907,WWK Arena,Augsburg
+78,Bundesliga,2023,172,VfB Stuttgart,STU,1893,MHPArena,Stuttgart
+78,Bundesliga,2023,173,RB Leipzig,LEI,2009,Red Bull Arena,Leipzig
+78,Bundesliga,2023,176,VfL Bochum,BOC,1848,Vonovia Ruhrstadion,Bochum
+78,Bundesliga,2023,180,1. FC Heidenheim,HEI,1946,Voith-Arena,Heidenheim an der Brenz
+78,Bundesliga,2023,181,SV Darmstadt 98,DAR,1898,Merck-Stadion am Böllenfalltor,Darmstadt
+78,Bundesliga,2023,182,Union Berlin,UNI,1966,Stadion An der Alten Försterei,Berlin
+78,Bundesliga,2023,192,1. FC Köln,KOL,1948,RheinEnergieSTADION,Köln
+78,Bundesliga,2024,157,Bayern München,BAY,1900,Allianz Arena,München
+78,Bundesliga,2024,160,SC Freiburg,FRE,1904,Europa-Park Stadion,Freiburg im Breisgau
+78,Bundesliga,2024,161,VfL Wolfsburg,WOL,1945,Volkswagen Arena,Wolfsburg
+78,Bundesliga,2024,162,Werder Bremen,WER,1899,Weserstadion,Bremen
+78,Bundesliga,2024,163,Borussia Mönchengladbach,MOE,1900,BORUSSIA-PARK,Mönchengladbach
+78,Bundesliga,2024,164,FSV Mainz 05,MAI,1905,MEWA ARENA,Mainz
+78,Bundesliga,2024,165,Borussia Dortmund,DOR,1909,SIGNAL IDUNA PARK,Dortmund
+78,Bundesliga,2024,167,1899 Hoffenheim,HOF,1899,PreZero Arena,Sinsheim
+78,Bundesliga,2024,168,Bayer Leverkusen,BAY,1904,BayArena,Leverkusen
+78,Bundesliga,2024,169,Eintracht Frankfurt,EIN,1899,Deutsche Bank Park,Frankfurt am Main
+78,Bundesliga,2024,170,FC Augsburg,AUG,1907,WWK Arena,Augsburg
+78,Bundesliga,2024,172,VfB Stuttgart,STU,1893,MHPArena,Stuttgart
+78,Bundesliga,2024,173,RB Leipzig,LEI,2009,Red Bull Arena,Leipzig
+78,Bundesliga,2024,176,VfL Bochum,BOC,1848,Vonovia Ruhrstadion,Bochum
+78,Bundesliga,2024,180,1. FC Heidenheim,HEI,1946,Voith-Arena,Heidenheim an der Brenz
+78,Bundesliga,2024,182,Union Berlin,UNI,1966,Stadion An der Alten Försterei,Berlin
+78,Bundesliga,2024,186,FC St. Pauli,PAU,1910,Millerntor-Stadion,Hamburg
+78,Bundesliga,2024,191,Holstein Kiel,HOL,1900,Holstein-Stadion,Kiel
+78,Bundesliga,2024,1660,SV Elversberg,ELV,1907,URSAPHARM-Arena an der Kaiserlinde,Spiesen-Elversberg
+61,Ligue 1,2022,77,Angers,ANG,1919,Stade Raymond-Kopa,Angers
+61,Ligue 1,2022,79,Lille,LIL,1944,Decathlon Arena - Stade Pierre-Mauroy,Villeneuve d&apos;Ascq
+61,Ligue 1,2022,80,Lyon,LYO,1950,Groupama Stadium,Décines-Charpieu
+61,Ligue 1,2022,81,Marseille,MAR,1899,Stade Orange Vélodrome,Marseille
+61,Ligue 1,2022,82,Montpellier,MON,1974,Stade de la Mosson-Mondial 98,Montpellier
+61,Ligue 1,2022,83,Nantes,NAN,1943,Stade de la Beaujoire - Louis Fonteneau,Nantes
+61,Ligue 1,2022,84,Nice,NIC,1904,Allianz Riviera,Nice
+61,Ligue 1,2022,85,Paris Saint Germain,PSG,1970,Parc des Princes,Paris
+61,Ligue 1,2022,91,Monaco,MON,1919,Stade Louis-II,Monaco
+61,Ligue 1,2022,93,Reims,REI,1909,Stade Auguste-Delaune,Reims
+61,Ligue 1,2022,94,Rennes,REN,1901,Roazhon Park,Rennes
+61,Ligue 1,2022,95,Strasbourg,STR,1906,Stade de la Meinau,Strasbourg
+61,Ligue 1,2022,96,Toulouse,TOU,1937,Stadium de Toulouse,Toulouse
+61,Ligue 1,2022,97,Lorient,LOR,1926,Stade du Moustoir - Yves Allainmat,Lorient
+61,Ligue 1,2022,98,Ajaccio,AJA,1910,Stade Michel-Moretti,Ajaccio
+61,Ligue 1,2022,99,Clermont Foot,CLE,1990,Stade Gabriel-Montpied,Clermont-Ferrand
+61,Ligue 1,2022,106,Stade Brestois 29,BRE,1950,Stade Francis-Le Blé,Brest
+61,Ligue 1,2022,108,Auxerre,AUX,1905,Stade de l'Abbé Deschamps,Auxerre
+61,Ligue 1,2022,110,Estac Troyes,TRO,1986,Stade de l'Aube,Troyes
+61,Ligue 1,2022,116,Lens,LEN,1906,Stade Bollaert-Delelis,Lens
+61,Ligue 1,2023,79,Lille,LIL,1944,Decathlon Arena - Stade Pierre-Mauroy,Villeneuve d&apos;Ascq
+61,Ligue 1,2023,80,Lyon,LYO,1950,Groupama Stadium,Décines-Charpieu
+61,Ligue 1,2023,81,Marseille,MAR,1899,Stade Orange Vélodrome,Marseille
+61,Ligue 1,2023,82,Montpellier,MON,1974,Stade de la Mosson-Mondial 98,Montpellier
+61,Ligue 1,2023,83,Nantes,NAN,1943,Stade de la Beaujoire - Louis Fonteneau,Nantes
+61,Ligue 1,2023,84,Nice,NIC,1904,Allianz Riviera,Nice
+61,Ligue 1,2023,85,Paris Saint Germain,PSG,1970,Parc des Princes,Paris
+61,Ligue 1,2023,91,Monaco,MON,1919,Stade Louis-II,Monaco
+61,Ligue 1,2023,93,Reims,REI,1909,Stade Auguste-Delaune,Reims
+61,Ligue 1,2023,94,Rennes,REN,1901,Roazhon Park,Rennes
+61,Ligue 1,2023,95,Strasbourg,STR,1906,Stade de la Meinau,Strasbourg
+61,Ligue 1,2023,96,Toulouse,TOU,1937,Stadium de Toulouse,Toulouse
+61,Ligue 1,2023,97,Lorient,LOR,1926,Stade du Moustoir - Yves Allainmat,Lorient
+61,Ligue 1,2023,99,Clermont Foot,CLE,1990,Stade Gabriel-Montpied,Clermont-Ferrand
+61,Ligue 1,2023,106,Stade Brestois 29,BRE,1950,Stade Francis-Le Blé,Brest
+61,Ligue 1,2023,111,Le Havre,HAV,1872,Stade Océane,Le Havre
+61,Ligue 1,2023,112,Metz,MET,1932,Stade Saint-Symphorien,Longeville-lès-Metz
+61,Ligue 1,2023,116,Lens,LEN,1906,Stade Bollaert-Delelis,Lens
+61,Ligue 1,2023,1063,Saint Etienne,ETI,1920,Stade Geoffroy-Guichard,Saint-Ètienne
