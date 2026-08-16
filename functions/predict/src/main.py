@@ -7,6 +7,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import joblib
 from appwrite.client import Client
 from appwrite.id import ID
+from appwrite.query import Query
 from appwrite.services.databases import Databases
 
 from predict_live import (
@@ -28,6 +29,28 @@ DATABASE_ID = os.environ["DATABASE_ID"]
 PREDICTIONS_COLLECTION_ID = os.environ["PREDICTIONS_COLLECTION_ID"]
 
 
+def clear_predictions_collection(databases: Databases, context) -> int:
+    deleted = 0
+    while True:
+        result = databases.list_documents(
+            database_id=DATABASE_ID,
+            collection_id=PREDICTIONS_COLLECTION_ID,
+            queries=[Query.limit(100)],
+        )
+        docs = result["documents"]
+        if not docs:
+            break
+        for doc in docs:
+            databases.delete_document(
+                database_id=DATABASE_ID,
+                collection_id=PREDICTIONS_COLLECTION_ID,
+                document_id=doc["$id"],
+            )
+            deleted += 1
+    context.log(f"Cleared predictions collection: {deleted} document(s) deleted.")
+    return deleted
+
+
 def main(context):
     client = (
         Client()
@@ -47,6 +70,8 @@ def main(context):
     model = joblib.load(MODEL_PATH)
 
     context.log(f"{len(fixtures)} match in the next rounds.")
+
+    clear_predictions_collection(databases, context)
 
     written, skipped = 0, 0
     for fx in fixtures:
