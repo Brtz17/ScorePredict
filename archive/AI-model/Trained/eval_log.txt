@@ -1,0 +1,112 @@
+============================================================
+1) OUTCOME ACCURACY (utolso 20%-os split alapjan, bivariate Poisson + Dixon-Coles)
+============================================================
+EM iteraciok:               16
+Becsult lambda3 (train):    0.0475
+Becsult Dixon-Coles rho:    -0.0044
+Bivariate modell - Poisson deviance: 1.1693, MAE: 0.9274
+Naive baseline    - Poisson deviance: 2.3166, MAE: 1.5127
+(baseline = csapat sajat legutobbi golatlaga, ellenfel/kontextus nelkul)
+
+Outcome accuracy (argmax a score-matrixon, DC-korrekcioval): 46.7%
+
+Feature-sulyozas (standardizalt egyutthatok, |ossz| szerint csokkeno):
+              feature  coef_home_goals (lambda1)  coef_away_goals (lambda2)  effect_home_per_1sd (x)  effect_away_per_1sd (x)
+          team_attack                   0.119130                   0.115620                 1.126517                 1.122569
+          opp_defense                   0.087498                   0.080062                 1.091440                 1.083354
+         team_defense                  -0.049319                  -0.041889                 0.951878                 0.958976
+days_since_last_match                   0.019948                   0.055926                 1.020148                 1.057519
+           opp_attack                  -0.040587                  -0.021808                 0.960226                 0.978429
+      opp_goals_lastN                   0.008759                  -0.012783                 1.008798                 0.987299
+  team_conceded_lastN                   0.004437                   0.005838                 1.004447                 1.005855
+   opp_conceded_lastN                  -0.001553                  -0.003711                 0.998448                 0.996296
+     team_goals_lastN                  -0.001823                  -0.000743                 0.998178                 0.999257
+
+Modell elmentve: output/models/bivariate_goals_model.pkl
+
+Modell H/D/V pontossag (argmax):                       46.7%
+Naive baseline (tobbsegi osztaly):                      44.3%
+Becsult Dixon-Coles rho:                                -0.0044
+RPS (argmax valoszinusegeken, minel kisebb annal jobb): 0.2195
+
+Tevesztesi matrix - argmax (sor=valos, oszlop=becsult):
+predicted    A     H
+actual              
+A          435  1519
+D          228  1467
+H          280  2626
+
+============================================================
+2) WALK-FORWARD CROSS-VALIDATION (bivariate Poisson + Dixon-Coles, alpha=0.0001)
+============================================================
+ fold  alpha  train_matches  test_matches  poisson_deviance      mae  lambda3       rho  outcome_accuracy  majority_baseline_accuracy      rps
+    1 0.0001           6555          6555          1.240460 0.961056 0.038499  0.014277          0.468497                    0.445309 0.219906
+    2 0.0001          13110          6555          1.186108 0.948482 0.044311  0.000100          0.470175                    0.442410 0.220489
+    3 0.0001          19665          6555          1.246553 0.979218 0.055559 -0.008561          0.456903                    0.438596 0.227703
+    4 0.0001          26220          6555          1.169207 0.927278 0.047655 -0.004455          0.466819                    0.443326 0.219487
+
+Osszefoglalo (atlag ± szoras a foldok kozott):
+  Poisson deviance:  1.2106 ± 0.0387
+  MAE:               0.9540 ± 0.0218
+  lambda3 (kozos komponens): 0.0465 ± 0.0071
+  Dixon-Coles rho:           0.0003 ± 0.0099
+  Outcome accuracy (argmax):  46.6% ± 0.6%
+  Majority baseline:          44.2% ± 0.3%
+  RPS (argmax, minel kisebb annal jobb): 0.2219 ± 0.0039
+
+============================================================
+3) ALPHA HYPERPARAMETER-HANGOLAS (walk-forward CV, RPS szerint rendezve)
+============================================================
+
+--- alpha = 1e-05 ---
+ fold   alpha  train_matches  test_matches  poisson_deviance      mae  lambda3       rho  outcome_accuracy  majority_baseline_accuracy      rps
+    1 0.00001           6555          6555          1.240460 0.961055 0.038500  0.014277          0.468497                    0.445309 0.219906
+    2 0.00001          13110          6555          1.186107 0.948481 0.044313  0.000100          0.470175                    0.442410 0.220489
+    3 0.00001          19665          6555          1.246555 0.979218 0.055561 -0.008561          0.456903                    0.438596 0.227703
+    4 0.00001          26220          6555          1.169206 0.927276 0.047657 -0.004455          0.466819                    0.443326 0.219487
+
+--- alpha = 0.0001 ---
+ fold  alpha  train_matches  test_matches  poisson_deviance      mae  lambda3       rho  outcome_accuracy  majority_baseline_accuracy      rps
+    1 0.0001           6555          6555          1.240460 0.961056 0.038499  0.014277          0.468497                    0.445309 0.219906
+    2 0.0001          13110          6555          1.186108 0.948482 0.044311  0.000100          0.470175                    0.442410 0.220489
+    3 0.0001          19665          6555          1.246553 0.979218 0.055559 -0.008561          0.456903                    0.438596 0.227703
+    4 0.0001          26220          6555          1.169207 0.927278 0.047655 -0.004455          0.466819                    0.443326 0.219487
+
+--- alpha = 0.001 ---
+ fold  alpha  train_matches  test_matches  poisson_deviance      mae  lambda3       rho  outcome_accuracy  majority_baseline_accuracy      rps
+    1  0.001           6555          6555          1.240464 0.961069 0.038484  0.014279          0.468497                    0.445309 0.219909
+    2  0.001          13110          6555          1.186119 0.948493 0.044294  0.000101          0.470175                    0.442410 0.220492
+    3  0.001          19665          6555          1.246538 0.979219 0.055537 -0.008559          0.456903                    0.438596 0.227701
+    4  0.001          26220          6555          1.169216 0.927293 0.047637 -0.004453          0.466667                    0.443326 0.219489
+
+--- alpha = 0.01 ---
+ fold  alpha  train_matches  test_matches  poisson_deviance      mae  lambda3       rho  outcome_accuracy  majority_baseline_accuracy      rps
+    1   0.01           6555          6555          1.240510 0.961197 0.038338  0.014295          0.468497                    0.445309 0.219933
+    2   0.01          13110          6555          1.186227 0.948610 0.044125  0.000113          0.470633                    0.442410 0.220513
+    3   0.01          19665          6555          1.246386 0.979234 0.055325 -0.008546          0.456903                    0.438596 0.227688
+    4   0.01          26220          6555          1.169312 0.927446 0.047460 -0.004437          0.466972                    0.443326 0.219510
+
+--- alpha = 0.1 ---
+ fold  alpha  train_matches  test_matches  poisson_deviance      mae  lambda3       rho  outcome_accuracy  majority_baseline_accuracy      rps
+    1    0.1           6555          6555          1.241063 0.962454 0.037060  0.014451          0.467277                    0.445309 0.220186
+    2    0.1          13110          6555          1.187346 0.949758 0.042639  0.000226          0.469260                    0.442410 0.220735
+    3    0.1          19665          6555          1.245149 0.979477 0.053453 -0.008418          0.457361                    0.438596 0.227583
+    4    0.1          26220          6555          1.170308 0.928937 0.045897 -0.004287          0.464836                    0.443326 0.219721
+
+--- alpha = 1.0 ---
+ fold  alpha  train_matches  test_matches  poisson_deviance      mae  lambda3       rho  outcome_accuracy  majority_baseline_accuracy      rps
+    1    1.0           6555          6555          1.248956 0.971955 0.032106  0.015353          0.459954                    0.445309 0.222433
+    2    1.0          13110          6555          1.198122 0.958825 0.036733  0.001063          0.456903                    0.442410 0.222814
+    3    1.0          19665          6555          1.244294 0.984682 0.042508 -0.007500          0.452326                    0.438596 0.227924
+    4    1.0          26220          6555          1.179863 0.939608 0.039767 -0.003264          0.457361                    0.443326 0.221690
+
+Osszesito tabla (RPS szerint novekvo sorrendben, minel kisebb annal jobb):
+  alpha  poisson_deviance      mae  outcome_accuracy  majority_baseline_accuracy      rps
+0.00001          1.210582 0.954007          0.465599                     0.44241 0.221896
+0.00010          1.210582 0.954008          0.465599                     0.44241 0.221896
+0.00100          1.210584 0.954019          0.465561                     0.44241 0.221898
+0.01000          1.210609 0.954122          0.465751                     0.44241 0.221911
+0.10000          1.210966 0.955156          0.464683                     0.44241 0.222056
+1.00000          1.217809 0.963767          0.456636                     0.44241 0.223715
+
+Legjobb alpha (RPS alapjan): 1e-05

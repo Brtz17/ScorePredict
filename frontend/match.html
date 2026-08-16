@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScorePredict</title>
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+    <link rel="stylesheet" href="/output.css">
+    <script type="module" src="/main.js"></script>
+</head>
+<body class="bg-background text-text">
+    <header class="bg-first border-b-2 border-text heading text-4xl font-bold w-full px-8 py-4 leading-none flex items-center sm:justify-start justify-center">
+        <a href="/">ScorePredict</a>
+    </header>
+
+    <div x-data="{
+        id: new URLSearchParams(window.location.search).get('id'),
+        get match() { return $store.predictions.byId(this.id) }
+    }" class="px-4 py-10 max-w-md mx-auto">
+
+    <template x-if="match">
+    <div class="flex flex-col items-center gap-8">
+
+        <span class="stamp" :style="'--stamp-color: ' + $store.predictions.competitionColor(match.competition_code) + '; --tilt: -3deg'"
+              x-text="$store.predictions.competitionName(match.competition_code)"></span>
+        
+        <div class="text-sm opacity-60 tracking-wide" style="font-family: var(--font-heading); transform: rotate(-1.5deg); letter-spacing: 0.06em;"
+             x-text="$store.predictions.formatMatchDate(match.utc_date)"></div>
+
+        <div class="flex flex-row justify-center items-center text-center gap-3 w-full">
+            <div class="home flex flex-col justify-center items-center gap-3 flex-1">
+              <div class="crest w-20 h-20 rounded-full bg-first flex items-center justify-center heading text-2xl overflow-hidden">
+                <img :src="match.home_team_crest"
+                     x-show="match.home_team_crest"
+                     @error="match.home_team_crest = null"
+                     class="w-full h-full object-contain p-2">
+                <span x-show="!match.home_team_crest" x-text="$store.predictions.initials(match.home_team_name)"></span>
+              </div>
+              <div x-text="match.home_team_name"></div>
+            </div>
+
+            <div class="scoreboard heading text-3xl font-bold flex flex-row items-center gap-3">
+                <div x-text="match.exp_home_goals.toFixed(1)"></div>
+                <div class="opacity-60 text-xl">:</div>
+                <div x-text="match.exp_away_goals.toFixed(1)"></div>
+            </div>
+
+            <div class="away flex flex-col justify-center items-center gap-3 flex-1">
+              <div class="crest w-20 h-20 rounded-full bg-first flex items-center justify-center heading text-2xl overflow-hidden">
+                <img :src="match.away_team_crest"
+                     x-show="match.away_team_crest"
+                     @error="match.away_team_crest = null"
+                     class="w-full h-full object-contain p-2">
+                <span x-show="!match.away_team_crest" x-text="$store.predictions.initials(match.away_team_name)"></span>
+              </div>
+              <div x-text="match.away_team_name"></div>
+            </div>
+        </div>
+
+        <div class="ticket w-full px-5 pt-4 pb-5 mt-2">
+            <div class="hand text-2xl text-center pb-1">Who's taking this one?</div>
+            <div class="tear-line mb-4"></div>
+
+            <div class="prob-bar w-full h-12 flex">
+                <div class="prob-seg h-full bg-emerald-500 flex items-center justify-center text-xs text-white font-bold"
+                        :style="'width: ' + (match.home_win_prob * 100) + '%'">
+                    <span x-show="match.home_win_prob * 100 >= 12" x-text="Math.round(match.home_win_prob * 100) + '%'"></span>
+                </div>
+                <div class="prob-seg h-full bg-gray-400 flex items-center justify-center text-xs text-white font-bold"
+                        :style="'width: ' + (match.draw_prob * 100) + '%'">
+                    <span x-show="match.draw_prob * 100 >= 12" x-text="Math.round(match.draw_prob * 100) + '%'"></span>
+                </div>
+                <div class="prob-seg h-full bg-rose-500 flex items-center justify-center text-xs text-white font-bold"
+                        :style="'width: ' + (match.away_win_prob * 100) + '%'">
+                    <span x-show="match.away_win_prob * 100 >= 12" x-text="Math.round(match.away_win_prob * 100) + '%'"></span>
+                </div>
+            </div>
+
+            <div class="flex justify-between text-xs pt-2 opacity-70">
+                <span x-text="match.home_team_name + ' win'"></span>
+                <span>Draw</span>
+                <span x-text="match.away_team_name + ' win'"></span>
+            </div>
+        </div>
+    </div>
+    </template>
+
+    <template x-if="!match && !$store.predictions.loading">
+      <div class="text-center py-16">Match not found. <a href="/" class="underline">Back to fixtures</a></div>
+    </template>
+
+    </div>
+</body>
+</html>

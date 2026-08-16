@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScorePredict</title>
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+  <link rel="stylesheet" href="/output.css">
+  <script type="module" src="/main.js"></script>
+  <style>
+    /* Fix header */
+    .fixed-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: #33658A;
+      border-bottom: 2px solid #ABDF75;
+    }
+  </style>
+</head>
+<body class="bg-background text-text">
+  <header class="fixed-header heading text-4xl font-bold w-full px-8 py-4 leading-none flex items-center sm:justify-start justify-center">
+    <a href="/">ScorePredict</a>
+  </header>
+
+  <div class="flex flex-col gap-14 p-8 pt-10" x-data>
+
+    <template x-for="group in $store.predictions.groupedMatches" :key="group.code">
+      <section>
+        <div class="flex items-center gap-3 mb-6">
+          <span class="stamp" :style="'--stamp-color: ' + group.color + '; --tilt: -4deg'" x-text="group.code"></span>
+          <h2 class="heading text-xl font-bold" x-text="group.name"></h2>
+        </div>
+
+        <div class="flex flex-col md:flex-row flex-wrap justify-center items-stretch w-full gap-x-6 gap-y-10">
+          <template x-for="(match, idx) in group.matches" :key="match.$id">
+            <a :href="'/match.html?id=' + match.$id"
+               class="sticker-card p-4 flex flex-col gap-2 w-full md:w-72"
+               :style="'--tilt: ' + $store.predictions.tiltFor(idx) + '; --tape-tilt: ' + $store.predictions.tapeTiltFor(idx)">
+
+              <span class="stamp self-start" :style="'--stamp-color: ' + group.color + '; --tilt: -2deg'" x-text="group.name"></span>
+              
+              <div class="text-xs text-center opacity-60 tracking-wide" style="font-family: var(--font-heading); transform: rotate(-1.5deg); letter-spacing: 0.04em;"
+                   x-text="$store.predictions.formatMatchDate(match.utc_date)"></div>
+
+              <div class="flex flex-row justify-center items-center text-center gap-2">
+                <div class="home flex flex-col justify-center items-center gap-2 flex-1">
+                  <div class="crest w-16 h-16 rounded-full flex items-center justify-center heading text-lg overflow-hidden">
+                    <img :src="match.home_team_crest"
+                         x-show="match.home_team_crest"
+                         @error="match.home_team_crest = null"
+                         class="w-full h-full object-contain p-1.5">
+                    <span x-show="!match.home_team_crest" x-text="$store.predictions.initials(match.home_team_name)"></span>
+                  </div>
+                  <div class="text-sm" x-text="match.home_team_name"></div>
+                </div>
+
+                <div class="vs-stamp w-9 h-9 text-[0.65rem]">VS</div>
+
+                <div class="away flex flex-col justify-center items-center gap-2 flex-1">
+                  <div class="crest w-16 h-16 rounded-full flex items-center justify-center heading text-lg overflow-hidden">
+                    <img :src="match.away_team_crest"
+                         x-show="match.away_team_crest"
+                         @error="match.away_team_crest = null"
+                         class="w-full h-full object-contain p-1.5">
+                    <span x-show="!match.away_team_crest" x-text="$store.predictions.initials(match.away_team_name)"></span>
+                  </div>
+                  <div class="text-sm" x-text="match.away_team_name"></div>
+                </div>
+              </div>
+
+            </a>
+          </template>
+        </div>
+      </section>
+    </template>
+
+  </div>
+</body>
+</html>

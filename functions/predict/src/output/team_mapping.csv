@@ -1,0 +1,156 @@
+league_id,league_name,competition_code,source_team_id,source_team_name,api_football_team_id,api_football_team_name,match_score,needs_review
+39,Premier League,PL,57,Arsenal FC,42,Arsenal,1.0,False
+39,Premier League,PL,1076,Coventry,1346,Manchester City,0.643,False
+39,Premier League,PL,322,Hull City AFC,64,Hull City,0.5,False
+39,Premier League,PL,66,Manchester United FC,33,Manchester United,1.0,False
+39,Premier League,PL,349,Ipswich Town FC,57,Ipswich,0.737,False
+39,Premier League,PL,71,Sunderland AFC,746,Sunderland,0.381,False
+39,Premier League,PL,351,Nottingham Forest FC,65,Nottingham Forest,1.0,False
+39,Premier League,PL,341,Leeds United FC,63,Leeds,0.621,False
+39,Premier League,PL,62,Everton FC,45,Everton,1.0,False
+39,Premier League,PL,354,Crystal Palace FC,52,Crystal Palace,1.0,False
+39,Premier League,PL,402,Brentford FC,55,Brentford,1.0,False
+39,Premier League,PL,73,Tottenham Hotspur FC,47,Tottenham,0.692,False
+39,Premier League,PL,65,Manchester City FC,50,Manchester City,1.0,False
+39,Premier League,PL,1044,AFC Bournemouth,35,Bournemouth,0.846,False
+39,Premier League,PL,397,Brighton & Hove Albion FC,51,Brighton,0.533,False
+39,Premier League,PL,58,Aston Villa FC,66,Aston Villa,1.0,False
+39,Premier League,PL,67,Newcastle United FC,34,Newcastle,0.727,False
+39,Premier League,PL,64,Liverpool FC,40,Liverpool,1.0,False
+39,Premier League,PL,63,Fulham FC,36,Fulham,1.0,False
+39,Premier League,PL,61,Chelsea FC,49,Chelsea,1.0,False
+140,La Liga,PD,263,Deportivo Alavés,542,Alaves,0.545,False
+140,La Liga,PD,82,Getafe CF,546,Getafe,1.0,False
+140,La Liga,PD,559,Sevilla FC,536,Sevilla,1.0,False
+140,La Liga,PD,87,Rayo Vallecano de Madrid,728,Rayo Vallecano,0.737,False
+140,La Liga,PD,5335,Real Racing Club de Santander,4665,Racing Santander,0.476,False
+140,La Liga,PD,94,Villarreal CF,533,Villarreal,1.0,False
+140,La Liga,PD,80,RCD Espanyol de Barcelona,540,Espanyol,0.529,False
+140,La Liga,PD,88,Levante UD,539,Levante,0.588,False
+140,La Liga,PD,558,RC Celta de Vigo,538,Celta Vigo,0.769,False
+140,La Liga,PD,79,CA Osasuna,727,Osasuna,0.824,False
+140,La Liga,PD,560,RC Deportivo La Coruña,544,Deportivo La Coruna,0.387,False
+140,La Liga,PD,285,Elche CF,797,Elche,1.0,False
+140,La Liga,PD,78,Club Atlético de Madrid,530,Atletico Madrid,0.789,False
+140,La Liga,PD,84,Málaga CF,535, Malaga,0.571,False
+140,La Liga,PD,90,Real Betis Balompié,543,Real Betis,0.69,False
+140,La Liga,PD,92,Real Sociedad de Fútbol,548,Real Sociedad,0.722,False
+140,La Liga,PD,77,Athletic Club,531,Athletic Club,1.0,False
+140,La Liga,PD,95,Valencia CF,532,Valencia,1.0,False
+140,La Liga,PD,86,Real Madrid CF,541,Real Madrid,1.0,False
+140,La Liga,PD,81,FC Barcelona,529,Barcelona,0.857,False
+78,Bundesliga,BL1,5,FC Bayern München,157,Bayern München,0.903,False
+78,Bundesliga,BL1,10,VfB Stuttgart,172,VfB Stuttgart,1.0,False
+78,Bundesliga,BL1,721,RB Leipzig,173,RB Leipzig,1.0,False
+78,Bundesliga,BL1,18,Borussia Mönchengladbach,163,Borussia Mönchengladbach,1.0,False
+78,Bundesliga,BL1,15,1. FSV Mainz 05,164,FSV Mainz 05,0.923,False
+78,Bundesliga,BL1,29,SC Paderborn 07,185,SC Paderborn 07,0.444,False
+78,Bundesliga,BL1,28,1. FC Union Berlin,182,Union Berlin,0.923,False
+78,Bundesliga,BL1,19,Eintracht Frankfurt,169,Eintracht Frankfurt,1.0,False
+78,Bundesliga,BL1,719,SV 07 Elversberg,1660,SV Elversberg,0.897,False
+78,Bundesliga,BL1,3,Bayer 04 Leverkusen,168,Bayer Leverkusen,0.914,False
+78,Bundesliga,BL1,1,1. FC Köln,192,1. FC Köln,1.0,False
+78,Bundesliga,BL1,2,TSG 1899 Hoffenheim,167,1899 Hoffenheim,0.882,False
+78,Bundesliga,BL1,4,Borussia Dortmund,165,Borussia Dortmund,1.0,False
+78,Bundesliga,BL1,7,Hamburger SV,175,Hamburger SV,1.0,False
+78,Bundesliga,BL1,17,SC Freiburg,160,SC Freiburg,1.0,False
+78,Bundesliga,BL1,12,SV Werder Bremen,162,Werder Bremen,0.897,False
+78,Bundesliga,BL1,16,FC Augsburg,170,FC Augsburg,1.0,False
+78,Bundesliga,BL1,6,FC Schalke 04,174,FC Schalke 04,1.0,False
+135,Serie A,SA,115,Udinese Calcio,494,Udinese,0.667,False
+135,Serie A,SA,7397,Como 1907,895,Como,0.615,False
+135,Serie A,SA,108,FC Internazionale Milano,505,Inter,0.438,False
+135,Serie A,SA,5911,AC Monza,1579,Monza,0.769,False
+135,Serie A,SA,107,Genoa CFC,495,Genoa,0.909,False
+135,Serie A,SA,113,SSC Napoli,492,Napoli,0.75,False
+135,Serie A,SA,112,Parma Calcio 1913,523,Parma,0.455,False
+135,Serie A,SA,104,Cagliari Calcio,490,Cagliari,0.696,False
+135,Serie A,SA,470,Frosinone Calcio,512,Frosinone,0.72,False
+135,Serie A,SA,109,Juventus FC,496,Juventus,1.0,False
+135,Serie A,SA,454,Venezia FC,517,Venezia,1.0,False
+135,Serie A,SA,5890,US Lecce,867,Lecce,0.769,False
+135,Serie A,SA,102,Atalanta BC,499,Atalanta,0.842,False
+135,Serie A,SA,471,US Sassuolo Calcio,488,Sassuolo,0.615,False
+135,Serie A,SA,586,Torino FC,503,Torino,1.0,False
+135,Serie A,SA,98,AC Milan,489,AC Milan,1.0,False
+135,Serie A,SA,103,Bologna FC 1909,500,Bologna,0.737,False
+135,Serie A,SA,110,SS Lazio,487,Lazio,0.769,False
+135,Serie A,SA,100,AS Roma,497,AS Roma,1.0,False
+135,Serie A,SA,99,ACF Fiorentina,502,Fiorentina,0.833,False
+61,Ligue 1,FL1,535,Le Mans FC,,,0.727,True
+61,Ligue 1,FL1,512,Stade Brestois 29,106,Stade Brestois 29,1.0,False
+61,Ligue 1,FL1,546,Racing Club de Lens,116,Lens,0.438,False
+61,Ligue 1,FL1,524,Paris Saint-Germain FC,85,Paris Saint Germain,0.947,False
+61,Ligue 1,FL1,529,Stade Rennais FC 1901,94,Rennes,0.686,False
+61,Ligue 1,FL1,531,ES Troyes AC,110,Estac Troyes,0.75,False
+61,Ligue 1,FL1,1045,Paris FC,114,Paris FC,0.6,False
+61,Ligue 1,FL1,516,Olympique de Marseille,81,Marseille,0.581,False
+61,Ligue 1,FL1,576,RC Strasbourg Alsace,95,Strasbourg,0.667,False
+61,Ligue 1,FL1,522,OGC Nice,84,Nice,0.667,False
+61,Ligue 1,FL1,525,FC Lorient,97,Lorient,0.824,False
+61,Ligue 1,FL1,532,Angers SCO,77,Angers,0.923,False
+61,Ligue 1,FL1,521,Lille OSC,79,Lille,0.714,False
+61,Ligue 1,FL1,511,Toulouse FC,96,Toulouse,1.0,False
+61,Ligue 1,FL1,523,Olympique Lyonnais,80,Lyon,0.364,False
+61,Ligue 1,FL1,533,Le Havre AC,111,Le Havre,0.842,False
+61,Ligue 1,FL1,548,AS Monaco FC,91,Monaco,0.8,False
+88,Eredivisie,DED,1909,SC Cambuur-Leeuwarden,420,Cambuur,0.5,False
+88,Eredivisie,DED,670,SBV Excelsior,196,Excelsior,0.818,False
+88,Eredivisie,DED,1915,NEC,413,NEC Nijmegen,0.444,True
+88,Eredivisie,DED,1912,Telstar 1963,427,Telstar,0.737,False
+88,Eredivisie,DED,718,Go Ahead Eagles,410,GO Ahead Eagles,1.0,False
+88,Eredivisie,DED,672,Willem II Tilburg,195,Willem II,0.692,False
+88,Eredivisie,DED,674,PSV,197,PSV Eindhoven,0.375,False
+88,Eredivisie,DED,1920,Fortuna Sittard,205,Fortuna Sittard,1.0,False
+88,Eredivisie,DED,682,AZ,201,AZ Alkmaar,0.333,False
+88,Eredivisie,DED,680,ADO Den Haag,198,ADO Den Haag,1.0,False
+88,Eredivisie,DED,6806,Sparta Rotterdam,426,Sparta Rotterdam,1.0,False
+88,Eredivisie,DED,675,Feyenoord Rotterdam,209,Feyenoord,0.643,False
+88,Eredivisie,DED,677,FC Groningen,202,Groningen,0.857,False
+88,Eredivisie,DED,676,FC Utrecht,207,Utrecht,0.824,False
+88,Eredivisie,DED,684,PEC Zwolle,193,PEC Zwolle,1.0,False
+88,Eredivisie,DED,678,AFC Ajax,194,Ajax,0.667,False
+88,Eredivisie,DED,673,SC Heerenveen,210,Heerenveen,0.87,False
+88,Eredivisie,DED,666,FC Twente '65,415,Twente,0.632,False
+94,Primeira Liga,PPL,582,GD Estoril Praia,230,Estoril,0.609,False
+94,Primeira Liga,PPL,5531,FC Famalicão,242,Famalicao,0.857,False
+94,Primeira Liga,PPL,5575,CS Marítimo,214,Maritimo,0.842,False
+94,Primeira Liga,PPL,6618,Casa Pia AC,4716,Casa Pia,0.842,False
+94,Primeira Liga,PPL,5543,Vitória SC,224,Guimaraes,0.571,False
+94,Primeira Liga,PPL,712,FC Arouca,240,Arouca,0.8,False
+94,Primeira Liga,PPL,9136,CF Estrela da Amadora,15130,Estrela,0.5,False
+94,Primeira Liga,PPL,498,Sporting Clube de Portugal,228,Sporting CP,0.595,False
+94,Primeira Liga,PPL,503,FC Porto,212,FC Porto,1.0,False
+94,Primeira Liga,PPL,7822,FC Alverca,4724,Alverca,0.526,False
+94,Primeira Liga,PPL,583,Moreirense FC,215,Moreirense,1.0,False
+94,Primeira Liga,PPL,5613,Sporting Clube de Braga,217,SC Braga,0.588,False
+94,Primeira Liga,PPL,5533,Gil Vicente FC,762,GIL Vicente,1.0,False
+94,Primeira Liga,PPL,496,Rio Ave FC,226,Rio Ave,1.0,False
+94,Primeira Liga,PPL,1903,Sport Lisboa e Benfica,211,Benfica,0.483,False
+94,Primeira Liga,PPL,5527,Académico de Viseu FC,238,Academico Viseu,0.357,False
+94,Primeira Liga,PPL,5530,CD Santa Clara,227,Santa Clara,0.88,False
+94,Primeira Liga,PPL,5529,CD Nacional,225,Nacional,0.842,False
+40,Championship,ELC,76,Wolverhampton Wanderers FC,39,Wolves,0.471,False
+40,Championship,ELC,59,Blackburn Rovers FC,67,Blackburn,0.72,False
+40,Championship,ELC,60,Bolton Wanderers FC,68,Bolton,0.381,False
+40,Championship,ELC,1081,Preston North End FC,59,Preston,0.583,False
+40,Championship,ELC,68,Norwich City FC,71,Norwich,0.737,False
+40,Championship,ELC,74,West Bromwich Albion FC,60,West Brom,0.621,False
+40,Championship,ELC,387,Bristol City FC,56,Bristol City,1.0,False
+40,Championship,ELC,384,Millwall FC,58,Millwall,1.0,False
+40,Championship,ELC,343,Middlesbrough FC,70,Middlesbrough,1.0,False
+40,Championship,ELC,1126,Lincoln City FC,1379,Lincoln,0.667,False
+40,Championship,ELC,70,Stoke City FC,75,Stoke City,1.0,False
+40,Championship,ELC,72,Swansea City AFC,76,Swansea,0.737,False
+40,Championship,ELC,348,Charlton Athletic FC,1335,Charlton,0.37,False
+40,Championship,ELC,342,Derby County FC,69,Derby,0.588,False
+40,Championship,ELC,325,Portsmouth FC,1355,Portsmouth,1.0,False
+40,Championship,ELC,69,Queens Park Rangers FC,72,QPR,0.357,False
+40,Championship,ELC,356,Sheffield United FC,62,Sheffield Utd,0.897,False
+40,Championship,ELC,332,Birmingham City FC,54,Birmingham,0.8,False
+40,Championship,ELC,346,Watford FC,38,Watford,1.0,False
+40,Championship,ELC,340,Southampton FC,41,Southampton,1.0,False
+40,Championship,ELC,328,Burnley FC,44,Burnley,1.0,False
+40,Championship,ELC,563,West Ham United FC,48,West Ham,0.5,False
+40,Championship,ELC,715,Cardiff City FC,43,Cardiff,0.737,False
+40,Championship,ELC,404,Wrexham AFC,1837,Wrexham,0.625,False

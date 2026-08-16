@@ -1,0 +1,41 @@
+Team-level dataset size: (65550, 15) (eredeti meccsek: 32775)
+Train: 52440 sor (26220 meccs), Test: 13110 sor (6555 meccs)
+
+EM iteraciok:               16
+Becsult lambda3 (train):    0.0475
+Becsult Dixon-Coles rho:    -0.0044
+Bivariate modell - Poisson deviance: 1.1693, MAE: 0.9274
+Naive baseline    - Poisson deviance: 2.3166, MAE: 1.5127
+(baseline = csapat sajat legutobbi golatlaga, ellenfel/kontextus nelkul)
+
+Outcome accuracy (argmax a score-matrixon, DC-korrekcioval): 46.7%
+
+Feature-sulyozas (standardizalt egyutthatok, |ossz| szerint csokkeno):
+              feature  coef_home_goals (lambda1)  coef_away_goals (lambda2)  effect_home_per_1sd (x)  effect_away_per_1sd (x)
+          team_attack                   0.119130                   0.115620                 1.126517                 1.122569
+          opp_defense                   0.087498                   0.080062                 1.091440                 1.083354
+         team_defense                  -0.049319                  -0.041889                 0.951878                 0.958976
+days_since_last_match                   0.019948                   0.055926                 1.020148                 1.057519
+           opp_attack                  -0.040587                  -0.021808                 0.960226                 0.978429
+      opp_goals_lastN                   0.008759                  -0.012783                 1.008798                 0.987299
+  team_conceded_lastN                   0.004437                   0.005838                 1.004447                 1.005855
+   opp_conceded_lastN                  -0.001553                  -0.003711                 0.998448                 0.996296
+     team_goals_lastN                  -0.001823                  -0.000743                 0.998178                 0.999257
+
+Modell elmentve: output/models/bivariate_goals_model.pkl
+
+Bivariate Poisson + Dixon-Coles H/D/V pontossag (argmax): 46.7%
+Naive baseline (tobbsegi osztaly):                          44.3%
+
+Tevesztesi matrix - argmax (sor=valos, oszlop=becsult):
+predicted    A     H
+actual              
+A          435  1519
+D          228  1467
+H          280  2626
+
+Minta elorejelzes (utolso teszt meccs):
+  Varhato golok: hazai 1.94 - vendeg 1.14 (kozos komponens lambda3=0.047, Dixon-Coles rho=-0.0044)
+  Valos eredmeny: 1 - 0
+  Hazai/Dontetlen/Vendeg valoszinuseg: 56.0% / 22.5% / 21.5%
+  Argmax dontes: H
