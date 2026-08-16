@@ -37,14 +37,15 @@ def clear_predictions_collection(databases: Databases, context) -> int:
             collection_id=PREDICTIONS_COLLECTION_ID,
             queries=[Query.limit(100)],
         )
-        docs = result["documents"]
+        docs = result["documents"] if isinstance(result, dict) else result.documents
         if not docs:
             break
         for doc in docs:
+            doc_id = doc["$id"] if isinstance(doc, dict) else doc.id
             databases.delete_document(
                 database_id=DATABASE_ID,
                 collection_id=PREDICTIONS_COLLECTION_ID,
-                document_id=doc["$id"],
+                document_id=doc_id,
             )
             deleted += 1
     context.log(f"Cleared predictions collection: {deleted} document(s) deleted.")
