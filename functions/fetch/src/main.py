@@ -283,8 +283,6 @@ def upsert_document(db: Databases, collection_id: str, doc_id: str, row: dict) -
             raise
 
 
-
-
 def delete_past_upcoming_fixtures(context, db: Databases, deadline: float | None = None) -> dict:
     """Deletes documents from upcoming_fixtures whose utc_date is already in the past
     (they are no longer 'upcoming' - they either got finished, i.e. moved to fixtures
@@ -304,10 +302,28 @@ def delete_past_upcoming_fixtures(context, db: Databases, deadline: float | None
             break
 
         try:
-            result = db.delete_documents(
-                DATABASE_ID, UPCOMING_FIXTURES_COL,
+            # Listázzuk a törlendő dokumentumokat
+            result = db.list_documents(
+                DATABASE_ID, 
+                UPCOMING_FIXTURES_COL,
                 queries=[Query.less_than("utc_date", now_iso), Query.limit(chunk_size)],
             )
+            
+            documents = result.get("documents", [])
+            if not documents:
+                break
+                
+            # Töröljük a dokumentumokat egyesével
+            for doc in documents:
+                try:
+                    db.delete_document(DATABASE_ID, UPCOMING_FIXTURES_COL, doc["$id"])
+                    total_deleted += 1
+                except Exception as e:
+                    try:
+                        context.log(f"CLEANUP: error deleting {doc['$id']}: {e}")
+                    except:
+                        print(f"CLEANUP: error deleting {doc['$id']}: {e}")
+                    
         except AppwriteException as e:
             try:
                 context.error(f"CLEANUP error: {e}")
@@ -316,21 +332,12 @@ def delete_past_upcoming_fixtures(context, db: Databases, deadline: float | None
             sys.stdout.flush()
             break
 
-        if isinstance(result, dict):
-            deleted_this_round = result.get("total", 0)
-        else:
-            deleted_this_round = getattr(result, "total", 0)
-
         rounds += 1
-        total_deleted += deleted_this_round
         try:
-            context.log(f"CLEANUP: #{rounds}: {deleted_this_round} past fixture deleted ({total_deleted} total)")
+            context.log(f"CLEANUP: #{rounds}: {len(documents)} past fixture deleted ({total_deleted} total)")
         except:
-            print(f"CLEANUP: #{rounds}: {deleted_this_round} past fixture deleted ({total_deleted} total)")
+            print(f"CLEANUP: #{rounds}: {len(documents)} past fixture deleted ({total_deleted} total)")
         sys.stdout.flush()
-
-        if deleted_this_round == 0:
-            break
 
     return {"past_fixtures_deleted": total_deleted, "rounds": rounds}
 
@@ -405,7 +412,6 @@ def insert_fixture_if_new(db: Databases, doc_id: str, data: dict) -> bool:
         if exc.code == 409:
             return False
         raise
-
 
 
 def get_or_default_team_state(creds: ApiCreds, team_id, league_id, season) -> dict:
@@ -621,7 +627,6 @@ def process_one_fixture(creds: ApiCreds, db: Databases, fixture: dict) -> None:
     )
 
     db.update_document(DATABASE_ID, FIXTURES_COL, fixture_id, {"processed": True})
-
 
 
 def main(context):

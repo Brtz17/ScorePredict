@@ -6,7 +6,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import joblib
 from appwrite.client import Client
-from appwrite.id import ID
+from appwrite.exception import AppwriteException
 from appwrite.query import Query
 from appwrite.services.databases import Databases
 
@@ -29,26 +29,57 @@ DATABASE_ID = os.environ["DATABASE_ID"]
 PREDICTIONS_COLLECTION_ID = os.environ["PREDICTIONS_COLLECTION_ID"]
 
 
-def clear_predictions_collection(databases: Databases, context) -> int:
+def upsert_document(databases: Databases, doc_id: str, data: dict) -> None:
+    try:
+        databases.update_document(
+            database_id=DATABASE_ID,
+            collection_id=PREDICTIONS_COLLECTION_ID,
+            document_id=doc_id,
+            data=data,
+        )
+    except AppwriteException as e:
+        if e.code == 404:
+            databases.create_document(
+                database_id=DATABASE_ID,
+                collection_id=PREDICTIONS_COLLECTION_ID,
+                document_id=doc_id,
+                data=data,
+            )
+        else:
+            raise
+
+
+def delete_stale_predictions(databases: Databases, context, keep_ids: set) -> int:
+    """Deletes prediction documents whose $id (=match_id) is not among the
+    freshly written ones - i.e. matches that dropped out of the next round
+    (postponed, already played, etc.)."""
     deleted = 0
+    cursor = None
     while True:
+        queries = [Query.limit(100)]
+        if cursor:
+            queries.append(Query.cursor_after(cursor))
         result = databases.list_documents(
             database_id=DATABASE_ID,
             collection_id=PREDICTIONS_COLLECTION_ID,
-            queries=[Query.limit(100)],
+            queries=queries,
         )
         docs = result["documents"] if isinstance(result, dict) else result.documents
         if not docs:
             break
         for doc in docs:
             doc_id = doc["$id"] if isinstance(doc, dict) else doc.id
-            databases.delete_document(
-                database_id=DATABASE_ID,
-                collection_id=PREDICTIONS_COLLECTION_ID,
-                document_id=doc_id,
-            )
-            deleted += 1
-    context.log(f"Cleared predictions collection: {deleted} document(s) deleted.")
+            if doc_id not in keep_ids:
+                databases.delete_document(
+                    database_id=DATABASE_ID,
+                    collection_id=PREDICTIONS_COLLECTION_ID,
+                    document_id=doc_id,
+                )
+                deleted += 1
+        if len(docs) < 100:
+            break
+        cursor = docs[-1]["$id"] if isinstance(docs[-1], dict) else docs[-1].id
+    context.log(f"Stale predictions removed: {deleted} document(s) deleted.")
     return deleted
 
 
@@ -72,9 +103,8 @@ def main(context):
 
     context.log(f"{len(fixtures)} match in the next rounds.")
 
-    clear_predictions_collection(databases, context)
-
     written, skipped = 0, 0
+    kept_ids = set()
     for fx in fixtures:
         code = fx["competition_code"]
         home_map = team_mapping.get((code, int(fx["home_team_id"])))
@@ -102,10 +132,9 @@ def main(context):
         outcome_probs = {"H": probs["home_win_prob"], "D": probs["draw_prob"], "A": probs["away_win_prob"]}
         decision = max(outcome_probs, key=outcome_probs.get)
 
-        databases.create_document(
-            database_id=DATABASE_ID,
-            collection_id=PREDICTIONS_COLLECTION_ID,
-            document_id=ID.unique(),
+        doc_id = str(fx["match_id"])
+        upsert_document(
+            databases, doc_id,
             data={
                 "competition_code": code,
                 "league_id": league_id,
@@ -130,7 +159,10 @@ def main(context):
                 "generated_at": datetime.now(timezone.utc).isoformat(),
             },
         )
+        kept_ids.add(doc_id)
         written += 1
+
+    delete_stale_predictions(databases, context, kept_ids)
 
     context.log(f"Done: {written} prediction saved, {skipped} match skipped.")
     return context.res.json({"ok": True, "written": written, "skipped": skipped})
