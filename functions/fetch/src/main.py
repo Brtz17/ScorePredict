@@ -285,6 +285,56 @@ def upsert_document(db: Databases, collection_id: str, doc_id: str, row: dict) -
 
 
 
+def delete_past_upcoming_fixtures(context, db: Databases, deadline: float | None = None) -> dict:
+    """Deletes documents from upcoming_fixtures whose utc_date is already in the past
+    (they are no longer 'upcoming' - they either got finished, i.e. moved to fixtures
+    via fetch_recent_results, or the API stopped returning them as SCHEDULED)."""
+    now_iso = datetime.now(timezone.utc).isoformat()
+    chunk_size = 100
+    total_deleted = 0
+    rounds = 0
+
+    while True:
+        if deadline is not None and time.monotonic() > deadline:
+            try:
+                context.log(f"CLEANUP: timeout, {total_deleted} past fixture deleted, run again next time")
+            except:
+                print(f"CLEANUP: timeout, {total_deleted} past fixture deleted, run again next time")
+            sys.stdout.flush()
+            break
+
+        try:
+            result = db.delete_documents(
+                DATABASE_ID, UPCOMING_FIXTURES_COL,
+                queries=[Query.less_than("utc_date", now_iso), Query.limit(chunk_size)],
+            )
+        except AppwriteException as e:
+            try:
+                context.error(f"CLEANUP error: {e}")
+            except:
+                print(f"CLEANUP error: {e}")
+            sys.stdout.flush()
+            break
+
+        if isinstance(result, dict):
+            deleted_this_round = result.get("total", 0)
+        else:
+            deleted_this_round = getattr(result, "total", 0)
+
+        rounds += 1
+        total_deleted += deleted_this_round
+        try:
+            context.log(f"CLEANUP: #{rounds}: {deleted_this_round} past fixture deleted ({total_deleted} total)")
+        except:
+            print(f"CLEANUP: #{rounds}: {deleted_this_round} past fixture deleted ({total_deleted} total)")
+        sys.stdout.flush()
+
+        if deleted_this_round == 0:
+            break
+
+    return {"past_fixtures_deleted": total_deleted, "rounds": rounds}
+
+
 def load_team_mapping(path: str) -> dict:
     mapping = {}
     try:
@@ -772,6 +822,7 @@ def main(context):
             sys.stdout.flush()
             return {
                 "total_fixtures_found": 0, "total_fixtures_written": 0,
+                "past_fixtures_deleted": 0,
                 "total_results_found": 0, "total_results_inserted": 0,
                 "state_processed": 0, "leagues_processed": 0, "leagues_failed": [],
             }
@@ -831,6 +882,9 @@ def main(context):
                 except:
                     print(f"  ERROR during writing fixture (match_id={row['match_id']}): {type(exc).__name__}: {exc}")
                 sys.stdout.flush()
+
+        cleanup_result = delete_past_upcoming_fixtures(context, db, deadline=deadline)
+        past_fixtures_deleted = cleanup_result["past_fixtures_deleted"]
 
         new_fixture_docs = result_rows_to_fixture_docs(context, all_result_rows, team_mapping)
         results_inserted = 0
@@ -901,6 +955,7 @@ def main(context):
         response_data = {
             "total_fixtures_found": len(all_fixture_rows),
             "total_fixtures_written": fixtures_written,
+            "past_fixtures_deleted": past_fixtures_deleted,
             "total_results_found": len(all_result_rows),
             "total_results_inserted": results_inserted,
             "state_pending_total": pending_total,
