@@ -4,8 +4,8 @@ import { Client, Databases, Query } from 'appwrite'
 window.Alpine = Alpine
 
 const ENDPOINT = 'https://fra.cloud.appwrite.io/v1'
-const PROJECT_ID = '6a4927d000138dc9fca2'
-const DATABASE_ID = '6a63ee9f00107891d1d5'
+const PROJECT_ID = '6aa11eba002b593483ea'
+const DATABASE_ID = '6aa122010028664aee2a'
 const PREDICTIONS_COLLECTION_ID = 'live_predictions'
 
 const client = new Client().setEndpoint(ENDPOINT).setProject(PROJECT_ID)
