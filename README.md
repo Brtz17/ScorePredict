@@ -1,52 +1,74 @@
 # ScorePredict
 
-A Python-based football match prediction system using a bivariate Poisson model to forecast exact scorelines.
+It's a website that helps to predict the scores of a match, using my own AI model.
+Backend is running on Appwrite with my self-written Python functions, frontend uses a html-tailwind css-alpine js stack.
+Click on the link, if you want to try out: https://scorepredict.appwrite.network/
 
-## Overview
+![alt text](image-1.png)
 
-ScorePredict's goal isn't just predicting the match outcome (home win / draw / away win) — exact scoreline prediction is a core part of the product. It relies on a bivariate Poisson model with a Dixon-Coles rho correction.
+## Setup
 
-## Main Components
+### 1. Frontend
+If you want to setup your own version:
 
-- **`build_dataset.py`** — Builds the dataset. Computes causal, cumulative running averages for team statistics to eliminate future data leakage. It also computes a causal "motivation" feature:
-  - For league phases: table-based points gap to the teams above/below (`build_prematch_standings_lookup`)
-  - For knockout rounds: pair-aggregate goal-difference based metric
-  - Both are normalized per-type via percentile ranking
-  - Exports `team_form_state.json` for reuse in future live prediction
-- **`train_bivariate.py`** — Trains the bivariate Poisson model; fully self-contained with no external module dependencies.
-- **`evaluate_bivariate.py`** — Evaluates the model; also self-contained.
+1. `git clone "https://github.com/Brtz17/ScorePredict"`
+2. `cd frontend`
+3. `npm install`
+4. `npm run dev`
 
-## Modeling Details
+Now you can customize the frontend!✨✨
+>Good to know: Now the project uses my own backend on Appwrite, so you won't need even just to sign up to Appwrite.
 
-- **Form metric**: opponent-strength-adjusted EWMA (Exponentially Weighted Moving Average, α = 0.35), replacing the earlier naive last-N-match averaging
-  - EWMA state is keyed by team_id and carries across season boundaries
-  - Cold-start defaults: 1.0 for form ratios, 365 days for rest
-- **Dixon-Coles rho correction**: implemented, fits near-zero across folds
-- **Evaluation metrics**: RPS (Ranked Probability Score), plus a custom XGBoost eval metric
+### 2. Backend (this is a bit harder)
+I have two main functions, you can edit: 'fetch' and 'predict'. To achieve this, follow these steps:
 
-## Results
+1. `npm install -g appwrite-cli`
+2. `appwrite login`
+3. `appwrite init project` (creates your own project, replaces the IDs in *'appwrite.config.json'*)
+4. Edit the function code in *'functions/fetch/src/main.py'* and *'functions/predict/src/main.py'*
+5. `appwrite push functions`
 
-Walk-forward cross-validation showed **54–56% outcome accuracy** vs. a ~46% baseline.
+>Note: I wouldn't recommend you to change important things in the code, because this is a really complicated project (for me at least)
 
-## Known Limitations / Next Steps
+## Environment variables
 
-- Draw underestimation is still an issue — region-level score matrix rescaling is the next planned approach to address it
-- History: the pipeline was originally built as `build_features.py`, `train_model.py`, and `evaluate_model.py` in Google Colab; it has since been refactored into standalone, modular scripts
+### Frontend (`.env` in `frontend/`)
+| Variable | Description |
+|---|---|
+| `VITE_APPWRITE_ENDPOINT` | Appwrite API endpoint |
+| `VITE_APPWRITE_PROJECT_ID` | Appwrite project ID |
+| `VITE_APPWRITE_PROJECT_NAME` | Appwrite project name |
 
-## Data Layer
+>Skip the next 2 tables, if you don't want to make your own backend
 
-- **Historical data**: API-Football (RapidAPI) — league IDs: PL=39, La Liga=140, Serie A=135, Bundesliga=78, Ligue 1=61; UEFA CL=2, EL=3, ECL=4
-- **Upcoming fixtures**: football-data.org (free tier) — covers ~9-12 major competitions vs. the full ~30-league historical list, a deliberate tradeoff for staying free
-- OpenLigaDB was ruled out since it only covers German leagues
-- A Node.js data-fetching script with rate limiting and checkpoint/resume logic
-- Team mapping between API-Football and football-data.org is mostly complete; one team couldn't be matched because it isn't in API-Football's teams.csv and is hard to obtain due to API limitations
+### `fetch` function (set in Appwrite Console → Function → Variables)
+| Variable | Required | Default |
+|---|---|---|
+| `APPWRITE_FUNCTION_API_ENDPOINT` | yes | — |
+| `APPWRITE_FUNCTION_PROJECT_ID` | yes | — |
+| `FOOTBALL_DATA_ORG_KEY` | yes | — |
+| `APPWRITE_FUNCTION_API_KEY` | no | uses request header key if unset |
+| `APPWRITE_DATABASE_ID` | no | `prediction_db` |
+| `RESULTS_LOOKBACK_DAYS` | no | `10` |
+| `TIME_BUDGET_S` | no | `240` |
+| `FIXTURES_BATCH_SIZE` | no | `30` |
+| `SEED_LEAGUES_CONFIG` | no | `false` |
+| `RUN_PROCESSED_BACKFILL` | no | `false` |
+| `BACKFILL_CHUNK_SIZE` | no | `500` |
+| `BACKFILL_TIME_BUDGET_S` | no | `800` |
 
-## Planned Architecture (Appwrite backend)
+### `predict` function (set in Appwrite Console → Function → Variables)
+| Variable | Required | Default |
+|---|---|---|
+| `APPWRITE_FUNCTION_API_ENDPOINT` | yes | — |
+| `APPWRITE_FUNCTION_PROJECT_ID` | yes | — |
+| `DATABASE_ID` | yes | — |
+| `PREDICTIONS_COLLECTION_ID` | yes | — |
+| `APPWRITE_API_KEY` | no | uses `x-appwrite-key` header if unset |
+| `UPCOMING_FIXTURES_COLLECTION_ID` | no | `upcoming_fixtures` |
 
-1. An Appwrite table stores which league/season data to fetch
-2. A daily job reruns the existing fetch + dataset-build code to refresh `dataset.csv`
-3. Fetches each league's upcoming fixtures via a (not-yet-written) API integration
-4. Runs the AI model on them
-5. Exports predictions to an Appwrite table
-
-**Build approach**: everything is built and tested locally first; the move to "automatic" (Appwrite-scheduled) operation happens only after tests pass. The Appwrite Function itself will also be deployed manually first ("Execute now"), with the daily cron schedule enabled only after a successful manual run.
+## Tech stack
+- **Frontend:** HTML, Tailwind CSS v4, Alpine.js, built with Vite
+- **Backend:** Appwrite Cloud (Functions, Databases), Python
+- **Prediction model:** self-written bivariate Poisson / Dixon-Coles model (pandas, numpy, scikit-learn, scipy, joblib)
+- **Data source:** football-data.org API
