@@ -1,6 +1,6 @@
 {
-    "organizationId": "68fb58a6002ea5ecd684",
-    "projectId": "6a4927d000138dc9fca2",
+    "organizationId": "6aa11e9c000426d25189",
+    "projectId": "6aa11eba002b593483ea",
     "projectName": "ScorePredict",
     "endpoint": "https://fra.cloud.appwrite.io/v1",
     "settings": {
@@ -48,9 +48,9 @@
     "functions": [
         {
             "$id": "6a64fd40000580851d21",
-            "name": "main",
+            "name": "predict",
             "runtime": "python-ml-3.11",
-            "buildSpecification": "s-0.5vcpu-512mb",
+            "buildSpecification": "s-2vcpu-2gb",
             "runtimeSpecification": "s-0.5vcpu-512mb",
             "execute": [
                 "any"
@@ -59,7 +59,9 @@
             "scopes": [
                 "users.read",
                 "databases.read",
-                "databases.write"
+                "databases.write",
+                "documents.read",
+                "documents.write"
             ],
             "schedule": "",
             "timeout": 15,
@@ -71,14 +73,90 @@
                 "__pypackages__"
             ],
             "deploymentRetention": 0,
-            "path": "functions/main"
+            "path": "functions/predict"
+        },
+        {
+            "$id": "fetch",
+            "name": "fetch",
+            "runtime": "python-3.12",
+            "execute": [
+                "any"
+            ],
+            "events": [],
+            "scopes": [
+                "databases.read",
+                "databases.write",
+                "documents.read",
+                "documents.write"
+            ],
+            "schedule": "",
+            "timeout": 300,
+            "enabled": true,
+            "logging": true,
+            "entrypoint": "src/main.py",
+            "commands": "pip install -r requirements.txt",
+            "ignore": [
+                "__pypackages__"
+            ],
+            "deploymentRetention": 0,
+            "path": "functions/fetch"
+        }
+    ],
+    "databases": [
+        {
+            "$id": "6aa122010028664aee2a",
+            "name": "Production TablesDB",
+            "enabled": true
         }
     ],
     "tables": [
         {
+            "$id": "leagues_config",
+            "$permissions": [],
+            "databaseId": "6aa122010028664aee2a",
+            "name": "leagues_config",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "competition_code",
+                    "type": "text",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "competition_name",
+                    "type": "text",
+                    "required": false,
+                    "array": false,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "league_id",
+                    "type": "integer",
+                    "required": false,
+                    "array": false,
+                    "default": null,
+                    "min": -9223372036854775808,
+                    "max": 9223372036854775807
+                },
+                {
+                    "key": "active",
+                    "type": "boolean",
+                    "required": false,
+                    "array": false,
+                    "default": null
+                }
+            ],
+            "indexes": []
+        },
+        {
             "$id": "team_current_state",
             "$permissions": [],
-            "databaseId": "6a63ee9f00107891d1d5",
+            "databaseId": "6aa122010028664aee2a",
             "name": "team_current_state",
             "enabled": true,
             "rowSecurity": false,
@@ -186,7 +264,7 @@
         {
             "$id": "team_form_global",
             "$permissions": [],
-            "databaseId": "6a63ee9f00107891d1d5",
+            "databaseId": "6aa122010028664aee2a",
             "name": "team_form_global",
             "enabled": true,
             "rowSecurity": false,
@@ -239,7 +317,7 @@
         {
             "$id": "team_mapping",
             "$permissions": [],
-            "databaseId": "6a63ee9f00107891d1d5",
+            "databaseId": "6aa122010028664aee2a",
             "name": "team_mapping",
             "enabled": true,
             "rowSecurity": false,
@@ -325,7 +403,7 @@
         {
             "$id": "upcoming_fixtures",
             "$permissions": [],
-            "databaseId": "6a63ee9f00107891d1d5",
+            "databaseId": "6aa122010028664aee2a",
             "name": "upcoming_fixtures",
             "enabled": true,
             "rowSecurity": false,
@@ -418,7 +496,7 @@
         {
             "$id": "live_predictions",
             "$permissions": [],
-            "databaseId": "6a63ee9f00107891d1d5",
+            "databaseId": "6aa122010028664aee2a",
             "name": "live_predictions",
             "enabled": true,
             "rowSecurity": false,
@@ -570,7 +648,7 @@
         {
             "$id": "fixtures",
             "$permissions": [],
-            "databaseId": "6a63ee9f00107891d1d5",
+            "databaseId": "6aa122010028664aee2a",
             "name": "fixtures",
             "enabled": true,
             "rowSecurity": false,
@@ -682,7 +760,7 @@
         {
             "$id": "dataset_history",
             "$permissions": [],
-            "databaseId": "6a63ee9f00107891d1d5",
+            "databaseId": "6aa122010028664aee2a",
             "name": "dataset_history",
             "enabled": true,
             "rowSecurity": false,
@@ -969,7 +1047,7 @@
         {
             "$id": "league_running_stats",
             "$permissions": [],
-            "databaseId": "6a63ee9f00107891d1d5",
+            "databaseId": "6aa122010028664aee2a",
             "name": "league_running_stats",
             "enabled": true,
             "rowSecurity": false,

@@ -15,10 +15,9 @@ from predict_live import (
     MODEL_PATH,
     TEAM_FORM_STATE_PATH,
     TEAM_MAPPING_PATH,
-    UPCOMING_FIXTURES_PATH,
     build_model_features,
     infer_season,
-    load_next_round_fixtures,
+    select_next_round,
     load_team_form_state,
     load_team_mapping,
     team_features,
@@ -27,6 +26,34 @@ from train_bivariate import FEATURE_COLUMNS, predict_match
 
 DATABASE_ID = os.environ["DATABASE_ID"]
 PREDICTIONS_COLLECTION_ID = os.environ["PREDICTIONS_COLLECTION_ID"]
+UPCOMING_FIXTURES_COLLECTION_ID = os.environ.get("UPCOMING_FIXTURES_COLLECTION_ID", "upcoming_fixtures")
+
+
+def load_upcoming_fixtures(databases: Databases, context) -> list:
+    """Reads every document from the upcoming_fixtures collection (paginated),
+    i.e. the same data the `fetch` function keeps in sync - not the static
+    upcoming_fixtures.csv snapshot bundled at deploy time."""
+    rows = []
+    cursor = None
+    while True:
+        queries = [Query.limit(100), Query.order_asc("utc_date")]
+        if cursor:
+            queries.append(Query.cursor_after(cursor))
+        result = databases.list_documents(
+            database_id=DATABASE_ID,
+            collection_id=UPCOMING_FIXTURES_COLLECTION_ID,
+            queries=queries,
+        )
+        docs = result["documents"] if isinstance(result, dict) else result.documents
+        if not docs:
+            break
+        rows.extend(docs)
+        if len(docs) < 100:
+            break
+        cursor = docs[-1]["$id"] if isinstance(docs[-1], dict) else docs[-1].id
+
+    context.log(f"Read {len(rows)} row(s) from {UPCOMING_FIXTURES_COLLECTION_ID}.")
+    return rows
 
 
 def upsert_document(databases: Databases, doc_id: str, data: dict) -> None:
@@ -98,7 +125,7 @@ def main(context):
 
     team_form_state = load_team_form_state(TEAM_FORM_STATE_PATH)
     team_mapping = load_team_mapping(TEAM_MAPPING_PATH)
-    fixtures = load_next_round_fixtures(UPCOMING_FIXTURES_PATH)
+    fixtures = select_next_round(load_upcoming_fixtures(databases, context))
     model = joblib.load(MODEL_PATH)
 
     context.log(f"{len(fixtures)} match in the next rounds.")

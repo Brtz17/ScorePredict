@@ -1,7 +1,7 @@
 import csv
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 import joblib
@@ -57,12 +57,31 @@ def load_team_mapping(path: str) -> dict:
     return mapping
 
 
-def load_next_round_fixtures(path: str) -> list:
+def load_fixtures_csv(path: str) -> list:
+    """Reads the local upcoming_fixtures.csv snapshot. Only meant for local/manual
+    runs (predict_live.py's own __main__ block) - the live Appwrite function reads
+    fresh rows from the database instead, since this file is a static artifact
+    bundled at deploy time and goes stale the moment the current round finishes."""
     with open(path, newline="", encoding="utf-8") as f:
-        rows = list(csv.DictReader(f))
+        return list(csv.DictReader(f))
+
+
+def select_next_round(rows: list, now: datetime | None = None) -> list:
+    """Picks the next round's fixtures per competition (lowest matchday number),
+    after first dropping any row whose kickoff is already in the past. The past-
+    match filter is a safety net: `rows` should already be past-fixture-free when
+    it comes straight from the DB (the fetch function's cleanup step removes them),
+    but this guards against a missed/late cleanup run still showing stale matches."""
+    if now is None:
+        now = datetime.now(timezone.utc)
+
+    future_rows = [
+        row for row in rows
+        if datetime.fromisoformat(str(row["utc_date"]).replace("Z", "+00:00")) >= now
+    ]
 
     min_matchday = {}
-    for row in rows:
+    for row in future_rows:
         code = row["competition_code"]
         if not row["matchday"]:
             continue
@@ -71,7 +90,7 @@ def load_next_round_fixtures(path: str) -> list:
             min_matchday[code] = matchday
 
     return [
-        row for row in rows
+        row for row in future_rows
         if row["matchday"] and int(row["matchday"]) == min_matchday.get(row["competition_code"])
     ]
 
@@ -128,7 +147,7 @@ def main():
 
     team_form_state = load_team_form_state(TEAM_FORM_STATE_PATH)
     team_mapping = load_team_mapping(TEAM_MAPPING_PATH)
-    fixtures = load_next_round_fixtures(UPCOMING_FIXTURES_PATH)
+    fixtures = select_next_round(load_fixtures_csv(UPCOMING_FIXTURES_PATH))
     model = joblib.load(MODEL_PATH)
 
     print(f"{len(fixtures)} matches in the next round")
