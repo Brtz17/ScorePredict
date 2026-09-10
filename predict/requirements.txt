@@ -1,0 +1,7 @@
+appwrite
+pandas
+numpy==2.3.4
+scikit-learn==1.7.1
+scipy==1.17.1
+joblib==1.5.3
+requests
