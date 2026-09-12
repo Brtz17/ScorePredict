@@ -72,3 +72,16 @@ I have two main functions, you can edit: 'fetch' and 'predict'. To achieve this,
 - **Backend:** Appwrite Cloud (Functions, Databases), Python
 - **Prediction model:** self-written bivariate Poisson / Dixon-Coles model (pandas, numpy, scikit-learn, scipy, joblib)
 - **Data source:** football-data.org API
+
+## From Idea to Project
+This whole thing started during the Football World Cup. I played a score guessing game with my friends and I guessed always incorrectly. So firstly I got really mad and then I had the idea to make a website which helps to predict football matches.
+I knew that I would need train my own Machine Learning-model but I knew absolutely nothing about this topic. So I watched to a big amount of Youtube videos, and I started working on the project.
+
+First step was preparing my data I got through API. It was obviusly the hardest part of this project. Since I am beginner in data science, I kept starting it over and over again. After a dozens of hours spent, I managed to train my model.
+
+After having a working model I was fed up with Python thus I started working on the frontend. It was not so hard for me, since I've had several projects wirtten in HTML+CSS+JS. It made things easier too, that I used Tailwind CSS and Alpine JS. It was pretty easy to use these frameworks despite I hadn't known anything about these before starting the project.
+
+With this done, I had to setup the project in Appwrite. This is a backend provider I am using for almost all my projects. It also took a huge amount of time, because I messed up a couple of things.
+
+But finally IT IS DONE. I am really happy to say this! I really hope, you like my project!
+In case you have some questions DM me on Slack: @be.the.nike
