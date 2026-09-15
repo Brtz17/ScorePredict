@@ -153,4 +153,8 @@ Alpine.store('predictions', {
   formatMatchDate,
 })
 
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js');
+}
+
 Alpine.start()
